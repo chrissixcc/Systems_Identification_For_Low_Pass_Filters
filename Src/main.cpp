@@ -19,15 +19,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "string.h"
-#include <iostream>
-#include"SystemStateHandler.h"
-#include"SystemState.h"
-
-extern SystemState CurrentState;
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <iostream>
+#include <queue>
 
+#include "Event.h"
+#include"SystemState.h"
+#include"SystemStateHandler.h"
+#include "StartEvent.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +58,9 @@ UART_HandleTypeDef huart3;
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
+
+extern SystemState CurrentState;
+SystemStateHandler stateHandler;
 
 /* USER CODE END PV */
 
@@ -110,19 +113,40 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
+  stateHandler.vTransition(STATE_IDLE);
 
+  //test, später muss heir interrupt hin
+  event_queue.push(new StartEvent());
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  //queue abarbeiten
+	  if (!event_queue.empty()) {
+
+		  Event* e = event_queue.front();
+		  event_queue.pop();
+		  e->vHandleEvent();
+		  delete e;
+		  e = NULL;
+	  }
+
+	  // led blinken
+	  if (CurrentState == STATE_OPERATING) {
+		  HAL_GPIO_WritePin (GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+		  HAL_Delay(500);
+		  HAL_GPIO_WritePin (GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+		  HAL_Delay(500);
+	  }
+
+	  //hier bitte noch bei state idle bzw operating die anderen leds auf aus setzten
+  }
     /* USER CODE END WHILE */
 
 
-
     /* USER CODE BEGIN 3 */
-  }
 
   /* USER CODE END 3 */
 }
@@ -298,7 +322,7 @@ static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
-  STATE_OPERATING
+  //STATE_OPERATING
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
