@@ -7,9 +7,8 @@
 
 #include "Event.h"
 
+std::queue<Event*> event_queue;
+
 Event::Event() {
-	// TODO Auto-generated constructor stub
-
 }
-
 

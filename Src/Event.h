@@ -19,7 +19,7 @@ public:
 	virtual ~Event() = default;
 };
 
-std::queue<Event*> event_queue;
+extern std::queue<Event*> event_queue;
 
 
 #endif /* SRC_EVENT_H_ */

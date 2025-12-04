@@ -16,6 +16,7 @@ enum SystemState
 	STATE_CLEANUP,
 	STATE_RESULT,
 	STATE_ERROR,
+	STATE_OPERATING, //neu von chrissi
 };
 
 
