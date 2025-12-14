@@ -3,6 +3,12 @@
  *
  *  Created on: Dec 4, 2025
  *      Author: Chrissi
+ *
+ *
+ *      Beschreibung:
+ *      -subclass von event
+ *      -soll starten anzeigen
+ *      -
  */
 
 #ifndef SRC_STARTEVENT_H_
