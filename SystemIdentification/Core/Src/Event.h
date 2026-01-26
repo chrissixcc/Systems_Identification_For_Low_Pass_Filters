@@ -15,6 +15,11 @@
 #include "SystemState.h"
 #include "main.h"
 
+struct MeasurementData {
+	uint32_t timestamp;
+	uint32_t adcValue;
+};
+
 class Event;
 extern std::queue<Event*> event_queue;
 extern SystemState CurrentState;
@@ -64,6 +69,11 @@ public:
 };
 
 class CalculationEvent : public Event {
+public:
+    void vHandleEvent() override;
+};
+
+class DischargeEvent : public Event {
 public:
     void vHandleEvent() override;
 };

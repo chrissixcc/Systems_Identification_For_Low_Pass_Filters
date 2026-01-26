@@ -86,6 +86,8 @@ void Error_Handler(void);
 #define STLK_TX_GPIO_Port GPIOD
 #define RC_INPUT_Pin GPIO_PIN_14
 #define RC_INPUT_GPIO_Port GPIOD
+#define Discharge_Pin GPIO_PIN_15
+#define Discharge_GPIO_Port GPIOD
 #define USB_PowerSwitchOn_Pin GPIO_PIN_6
 #define USB_PowerSwitchOn_GPIO_Port GPIOG
 #define USB_OverCurrent_Pin GPIO_PIN_7
